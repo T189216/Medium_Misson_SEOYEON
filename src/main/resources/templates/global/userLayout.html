@@ -11,7 +11,8 @@
 
     <a href="/">홈</a>
     <a href="/post/write">글 작성하기</a>
-    <a href="/post/list">글 목록</a>
+    <a href="/post/list">전체 글 목록</a>
+    <a href="/post/myList">내 글 목록</a>
     <a th:if="${@rq.admin}" href="/adm">관리자 홈</a>
     <a th:if="${@rq.logout}"  href="/member/login">로그인</a>
     <a th:if="${@rq.logout}" href="/member/join">회원가입</a>

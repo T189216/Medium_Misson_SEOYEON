@@ -30,7 +30,8 @@ public class PostController {
     @PostMapping("/write")
     public String write(@RequestParam("title") String title,
                         @RequestParam("body") String body,
-                        @RequestParam("isPublished") boolean isPublished) {
+                        @RequestParam("isPublished") boolean isPublished
+    ) {
         Member author = rq.getLoginedMember();
         postService.write(author, title, body, isPublished);
 
@@ -58,5 +59,11 @@ public class PostController {
         rq.setAttribute("page", page);
 
         return "domain/post/post/list";
+    }
+
+    @GetMapping("/myList")
+    public String showMyPosts() {
+
+        return "domain/post/post/myList";
     }
 }
