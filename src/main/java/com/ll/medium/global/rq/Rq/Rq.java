@@ -68,4 +68,13 @@ public class Rq {
     public boolean isLogout() {
         return !isLogin();
     }
+
+    public boolean isAdmin() {
+        if (isLogout()) return false;
+
+        return getUser()
+                .getAuthorities()
+                .stream()
+                .anyMatch(it -> it.getAuthority().equals("ROLE_ADMIN"));
+    }
 }
