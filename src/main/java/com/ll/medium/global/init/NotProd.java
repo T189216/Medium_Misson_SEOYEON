@@ -16,6 +16,8 @@ public class NotProd {
     @Bean
     public ApplicationRunner initNotProd() {
         return args -> {
+            if (memberService.count() > 0) return;
+
             memberService.join("system", "system");
             memberService.join("admin", "admin");
             memberService.join("user1", "1234");
