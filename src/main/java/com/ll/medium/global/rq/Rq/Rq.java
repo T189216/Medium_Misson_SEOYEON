@@ -1,5 +1,6 @@
 package com.ll.medium.global.rq.Rq;
 
+import com.ll.medium.domain.member.member.entity.Member;
 import com.ll.medium.global.rsData.RsData.RsData;
 import com.ll.medium.standard.util.Ut.Ut;
 import jakarta.servlet.http.HttpServletRequest;
@@ -94,5 +95,13 @@ public class Rq {
 
         return queryString;
     }
-}
 
+    public Member getLoginedMember() {
+        User user = getUser();
+        if (user != null) {
+            return new Member(user.getUsername(), user.getPassword());
+        }
+
+        return null;
+    }
+}

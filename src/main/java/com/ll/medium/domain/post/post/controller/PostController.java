@@ -1,5 +1,6 @@
 package com.ll.medium.domain.post.post.controller;
 
+import com.ll.medium.domain.member.member.entity.Member;
 import com.ll.medium.domain.post.post.entity.Post;
 import com.ll.medium.domain.post.post.service.PostService;
 import com.ll.medium.global.rq.Rq.Rq;
@@ -24,6 +25,16 @@ public class PostController {
     @GetMapping("/write")
     public String write() {
         return "domain/post/post/writeForm";
+    }
+
+    @PostMapping("/write")
+    public String write(@RequestParam("title") String title,
+                        @RequestParam("body") String body,
+                        @RequestParam("isPublished") boolean isPublished) {
+        Member author = rq.getLoginedMember();
+        postService.write(author, title, body, isPublished);
+
+        return "redirect:/post/list";
     }
 
     @GetMapping("/{id}")

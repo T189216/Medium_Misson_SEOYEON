@@ -1,6 +1,7 @@
 package com.ll.medium.domain.post.post.service;
 
 import com.ll.medium.domain.member.member.entity.Member;
+import com.ll.medium.domain.member.member.repository.MemberRepository;
 import com.ll.medium.domain.post.post.entity.Post;
 import com.ll.medium.domain.post.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +17,12 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class PostService {
     private final PostRepository postRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public void write(Member author, String title, String body, boolean isPublished) {
+        memberRepository.save(author);
+
         Post post = Post.builder()
                 .author(author)
                 .title(title)
