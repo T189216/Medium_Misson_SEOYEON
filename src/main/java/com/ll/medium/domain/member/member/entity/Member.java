@@ -50,7 +50,7 @@ public class Member {
 
         authorities.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
 
-        if ("admin".equals(username)) {
+        if (List.of("system", "admin").contains(username)) {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
 

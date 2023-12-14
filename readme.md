@@ -8,7 +8,7 @@
 - [x] POST /member/login : 로그인 폼 처리
 
 #### 로그아웃
-- [ ] POST /member/logout : 로그아웃
+- [x] POST /member/logout : 로그아웃
 
 #### 홈
 - [ ] GET / : 홈
