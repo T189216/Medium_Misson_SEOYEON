@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 
+import java.util.stream.IntStream;
+
 @Configuration
 @Profile("!prod")
 @Slf4j
@@ -28,6 +30,7 @@ public class NotProd {
             Member User1 = memberService.join("user1", "1234").getData();
             Member User2 = memberService.join("user2", "1234").getData();
             Member User3 = memberService.join("user3", "1234").getData();
+            Member User4 = memberService.join("user4", "1234").getData();
 
             postService.write(User1, "제목 1", "내용 1", true);
             postService.write(User1, "제목 2", "내용 2", true);
@@ -35,6 +38,10 @@ public class NotProd {
 
             postService.write(User2, "제목 4", "내용 4", false);
             postService.write(User2, "제목 5", "내용 5", true);
+
+            IntStream.rangeClosed(6, 50).forEach(i -> {
+                postService.write(User3, "제목 " + i, "내용 " + i, true);
+            });
         };
     }
 }
