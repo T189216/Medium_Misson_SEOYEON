@@ -1,6 +1,8 @@
 package com.ll.medium.global.init;
 
+import com.ll.medium.domain.member.member.entity.Member;
 import com.ll.medium.domain.member.member.service.MemberService;
+import com.ll.medium.domain.post.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
@@ -15,6 +17,7 @@ import org.springframework.core.annotation.Order;
 @RequiredArgsConstructor
 public class NotProd {
     private final MemberService memberService;
+    private final PostService postService;
 
     @Bean
     @Order(2)
@@ -22,8 +25,16 @@ public class NotProd {
         return args -> {
             if (memberService.findByUsername("user1").isPresent()) return;
 
-            memberService.join("user1", "1234");
-            memberService.join("user2", "1234");
+            Member User1 = memberService.join("user1", "1234").getData();
+            Member User2 = memberService.join("user2", "1234").getData();
+            Member User3 = memberService.join("user3", "1234").getData();
+
+            postService.write(User1, "제목 1", "내용 1", true);
+            postService.write(User1, "제목 2", "내용 2", true);
+            postService.write(User1, "제목 3", "내용 3", false);
+
+            postService.write(User2, "제목 4", "내용 4", false);
+            postService.write(User2, "제목 5", "내용 5", true);
         };
     }
 }
