@@ -6,6 +6,7 @@ import com.ll.medium.global.rq.Rq.Rq;
 import com.ll.medium.global.rsData.RsData.RsData;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,11 +19,13 @@ public class MemberController {
     private final MemberService memberService;
     private final Rq rq;
 
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/join")
     public String showJoin() {
         return "domain/member/member/join";
     }
 
+    @PreAuthorize("isAnonymous()")
     @PostMapping("/join")
     public String join(@Valid JoinForm joinForm) {
         RsData<Member> joinRs = memberService.join(joinForm.getUsername(), joinForm.getPassword());
