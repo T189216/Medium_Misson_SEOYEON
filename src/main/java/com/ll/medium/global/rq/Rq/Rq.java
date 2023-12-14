@@ -5,10 +5,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.util.URLEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 @Component
 @RequestScope
@@ -45,5 +50,22 @@ public class Rq {
         }
 
         return redirect(path, rs.getMsg());
+    }
+
+    public User getUser() {
+        return Optional.ofNullable(SecurityContextHolder.getContext())
+                .map(SecurityContext::getAuthentication)
+                .map(Authentication::getPrincipal)
+                .filter(it -> it instanceof User)
+                .map(it -> (User) it)
+                .orElse(null);
+    }
+
+    public boolean isLogin() {
+        return getUser() != null;
+    }
+
+    public boolean isLogout() {
+        return !isLogin();
     }
 }

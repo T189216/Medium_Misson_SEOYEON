@@ -1,4 +1,10 @@
 <html layout:decorate="~{global/userLayout}">
+
+<head>
+    <title>회원가입 - 미디엄</title>
+</head>
+
+<body>
 <div layout:fragment="content">
     <h1>회원가입</h1>
 
@@ -7,7 +13,7 @@
             form.username.value = form.username.value.trim();
 
             if (form.username.value.length == 0) {
-                toastWarning('ID를 입력해주세요.');
+                toastWarning('사용자 ID를 입력해주세요.');
                 form.username.focus();
                 return;
             }
@@ -40,7 +46,7 @@
 
     <form th:action method="POST" onsubmit="submitJoinForm(this); return false;">
         <div>
-            <label>ID</label>
+            <label>사용자 ID</label>
             <input type="text" name="username">
         </div>
 
@@ -57,4 +63,6 @@
         <button type="submit">회원가입</button>
     </form>
 </div>
+</body>
+
 </html>
