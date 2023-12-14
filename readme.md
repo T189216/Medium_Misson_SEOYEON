@@ -1,10 +1,10 @@
 # 구현 목록
 #### 가입
 - [x] GET /member/join : 가입 폼
-- [x] POST /member/join : 가입 폼 처리
+- [c] POST /member/join : 가입 폼 처리
 
 #### 로그인
-- [ ] GET /member/login : 로그인 폼
+- [x] GET /member/login : 로그인 폼
 - [ ] POST /member/login : 로그인 폼 처리
 
 #### 로그아웃
