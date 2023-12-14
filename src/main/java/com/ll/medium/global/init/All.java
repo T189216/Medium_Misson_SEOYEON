@@ -18,7 +18,7 @@ public class All {
     @Order(1)
     public ApplicationRunner initAll() {
         return args -> {
-            if (memberService.count() > 0) return;
+            if (memberService.findByUsername("system").isPresent()) return;
 
             memberService.join("system", "system");
             memberService.join("admin", "admin");
