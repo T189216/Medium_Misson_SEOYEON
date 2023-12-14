@@ -1,7 +1,7 @@
 # 구현 목록
 #### 가입
 - [x] GET /member/join : 가입 폼
-- [c] POST /member/join : 가입 폼 처리
+- [x] POST /member/join : 가입 폼 처리
 
 #### 로그인
 - [x] GET /member/login : 로그인 폼
