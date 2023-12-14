@@ -77,4 +77,8 @@ public class Rq {
                 .stream()
                 .anyMatch(it -> it.getAuthority().equals("ROLE_ADMIN"));
     }
+
+    public void setAttribute(String key, Object value) {
+        request.setAttribute(key, value);
+    }
 }
