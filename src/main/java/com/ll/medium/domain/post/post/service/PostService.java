@@ -59,4 +59,15 @@ public class PostService {
         post.setBody(body);
         post.setPublished(published);
     }
+
+    public boolean canDelete(Member author, Post post) {
+        if (author.isAdmin()) return true;
+
+        return author.equals(post.getAuthor());
+    }
+
+    @Transactional
+    public void delete(Post post) {
+        postRepository.delete((post));
+    }
 }
