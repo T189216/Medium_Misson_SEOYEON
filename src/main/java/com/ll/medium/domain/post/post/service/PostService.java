@@ -48,4 +48,15 @@ public class PostService {
     public Page<Post> search(Member author, String kw, Pageable pageable) {
         return postRepository.findByAuthorAndTitleContainingIgnoreCaseOrAuthorAndBodyContainingIgnoreCase(author, kw, author, kw, pageable);
     }
+
+    public boolean canModify(Member author, Post post) {
+        return author.equals(post.getAuthor());
+    }
+
+    @Transactional
+    public void modify(Post post, String title, String body, boolean published) {
+        post.setTitle(title);
+        post.setBody(body);
+        post.setPublished(published);
+    }
 }

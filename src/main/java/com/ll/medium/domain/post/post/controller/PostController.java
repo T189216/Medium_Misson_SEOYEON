@@ -2,6 +2,7 @@ package com.ll.medium.domain.post.post.controller;
 
 import com.ll.medium.domain.post.post.entity.Post;
 import com.ll.medium.domain.post.post.service.PostService;
+import com.ll.medium.global.exception.GlobalException;
 import com.ll.medium.global.rq.Rq.Rq;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -75,5 +77,29 @@ public class PostController {
         Post post = postService.write(rq.getMember(), form.getTitle(), form.getBody(), form.isPublished());
 
         return rq.redirect("/post/" + post.getId(), post.getId() + "번 글이 작성되었습니다.");
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{id}/modify")
+    public String showModify(@PathVariable long id, Model model) {
+        Post post = postService.findById(id).orElseThrow(() -> new GlobalException("404-1", "해당 글이 존재하지 않습니다."));
+
+        if (!postService.canModify(rq.getMember(), post)) throw new GlobalException("403-1", "권한이 없습니다.");
+
+        model.addAttribute("post", post);
+
+        return "domain/post/post/modify";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/{id}/modify")
+    public String showModify(@PathVariable long id, @Valid ModifyForm form) {
+        Post post = postService.findById(id).orElseThrow(() -> new GlobalException("404-1", "해당 글이 존재하지 않습니다."));
+
+        if (!postService.canModify(rq.getMember(), post)) throw new GlobalException("403-1", "권한이 없습니다.");
+
+        postService.modify(post, form.getTitle(), form.getBody(), form.isPublished());
+
+        return rq.redirect("/post/" + post.getId(), post.getId() + "번 글이 수정되었습니다.");
     }
 }
