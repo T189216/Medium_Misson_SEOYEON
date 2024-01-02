@@ -42,6 +42,6 @@ public class PostService {
     }
 
     public Page<Post> search(String kw, Pageable pageable) {
-        return postRepository.findByTitleContainingIgnoreCaseOrBodyContainingIgnoreCase(kw, kw, pageable);
+        return postRepository.findByIsPublishedAndTitleContainingIgnoreCaseOrIsPublishedAndBodyContainingIgnoreCase(true, kw, true, kw, pageable);
     }
 }
