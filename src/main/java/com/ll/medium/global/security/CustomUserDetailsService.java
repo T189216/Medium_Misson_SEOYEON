@@ -5,7 +5,6 @@ import com.ll.medium.domain.member.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,7 +40,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
 
-        return new User(
+        return new SecurityUser(
+                member.getId(),
                 member.getUsername(),
                 member.getPassword(),
                 member.getAuthorities()
