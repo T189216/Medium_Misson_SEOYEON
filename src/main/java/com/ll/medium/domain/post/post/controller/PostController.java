@@ -1,9 +1,9 @@
 package com.ll.medium.domain.post.post.controller;
 
-import com.ll.medium.domain.member.member.entity.Member;
 import com.ll.medium.domain.post.post.entity.Post;
 import com.ll.medium.domain.post.post.service.PostService;
 import com.ll.medium.global.rq.Rq.Rq;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,22 +22,6 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
     private final Rq rq;
-
-    @GetMapping("/write")
-    public String write() {
-        return "domain/post/post/writeForm";
-    }
-
-    @PostMapping("/write")
-    public String write(@RequestParam("title") String title,
-                        @RequestParam("body") String body,
-                        @RequestParam("isPublished") boolean isPublished
-    ) {
-        Member author = rq.getLoginedMember();
-        postService.write(author, title, body, isPublished);
-
-        return "redirect:/post/list";
-    }
 
     @GetMapping("/{id}")
     public String showDetail(@PathVariable long id) {
@@ -77,5 +61,19 @@ public class PostController {
         rq.setAttribute("page", page);
 
         return "domain/post/post/myList";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/write")
+    public String showWrite() {
+        return "domain/post/post/write";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/write")
+    public String showWrite(@Valid WriteForm form) {
+        Post post = postService.write(rq.getMember(), form.getTitle(), form.getBody(), form.isPublished());
+
+        return rq.redirect("/post/" + post.getId(), post.getId() + "번 글이 작성되었습니다.");
     }
 }

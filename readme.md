@@ -29,8 +29,8 @@
 - [x] POST /post/write : 글 작성 처리
 
 #### 글 수정
-- [ ] GET /post/1/modify : 1번 글 수정 폼
-- [ ] PUT /post/1/modify : 1번 글 수정 폼 처리
+- [x] GET /post/1/modify : 1번 글 수정 폼
+- [x] PUT /post/1/modify : 1번 글 수정 폼 처리
 
 #### 글 삭제
 - [ ] DELETE /post/1/delete : 1번 글 삭제

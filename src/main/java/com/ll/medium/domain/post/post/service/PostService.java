@@ -20,7 +20,7 @@ public class PostService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public void write(Member author, String title, String body, boolean isPublished) {
+    public Post write(Member author, String title, String body, boolean isPublished) {
         memberRepository.save(author);
 
         Post post = Post.builder()
@@ -30,7 +30,7 @@ public class PostService {
                 .isPublished(isPublished)
                 .build();
 
-        postRepository.save(post);
+        return postRepository.save(post);
     }
 
     public Object findTop30ByIsPublishedOrderByIdDesc(boolean isPublished) {
