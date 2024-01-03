@@ -39,8 +39,11 @@ public class NotProd {
             postService.write(User2, "제목 4", "내용 4", false, true);
             postService.write(User2, "제목 5", "내용 5", true, true);
 
-            IntStream.rangeClosed(6, 50).forEach(i -> {
+            IntStream.rangeClosed(6, 110).forEach(i -> {
                 postService.write(User3, "제목 " + i, "내용 " + i, true, false);
+            });
+            IntStream.rangeClosed(111, 210).forEach(i -> {
+                postService.write(User3, "제목 " + i, "내용 " + i, true, true);
             });
         };
     }
