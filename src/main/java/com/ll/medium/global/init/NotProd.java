@@ -32,15 +32,15 @@ public class NotProd {
             Member User3 = memberService.join("user3", "1234").getData();
             Member User4 = memberService.join("user4", "1234").getData();
 
-            postService.write(User1, "제목 1", "내용 1", true);
-            postService.write(User1, "제목 2", "내용 2", true);
-            postService.write(User1, "제목 3", "내용 3", false);
+            postService.write(User1, "제목 1", "내용 1", true, false);
+            postService.write(User1, "제목 2", "내용 2", true, true);
+            postService.write(User1, "제목 3", "내용 3", false, false);
 
-            postService.write(User2, "제목 4", "내용 4", false);
-            postService.write(User2, "제목 5", "내용 5", true);
+            postService.write(User2, "제목 4", "내용 4", false, true);
+            postService.write(User2, "제목 5", "내용 5", true, true);
 
             IntStream.rangeClosed(6, 50).forEach(i -> {
-                postService.write(User3, "제목 " + i, "내용 " + i, true);
+                postService.write(User3, "제목 " + i, "내용 " + i, true, false);
             });
         };
     }
