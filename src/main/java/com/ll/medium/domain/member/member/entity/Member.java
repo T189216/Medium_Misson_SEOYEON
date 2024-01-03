@@ -40,6 +40,8 @@ public class Member {
 
     private String password;
 
+    private boolean isPaid;
+
     public Member(String username, String password) {
         this.username = username;
         this.password = password;
@@ -54,11 +56,19 @@ public class Member {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
 
+        if (isPaid) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_PAID"));
+        }
+
         return authorities;
     }
 
     public boolean isAdmin() {
         return getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+    }
+
+    public boolean isPaid() {
+        return isPaid;
     }
 }
