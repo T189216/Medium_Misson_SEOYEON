@@ -9,7 +9,11 @@ import lombok.Setter;
 public class WriteForm {
     @NotBlank
     private String title;
+
     @NotBlank
     private String body;
+
     private boolean isPublished;
+
+    private boolean isPaid;
 }
