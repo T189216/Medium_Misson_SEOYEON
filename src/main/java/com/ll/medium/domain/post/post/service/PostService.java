@@ -20,7 +20,7 @@ public class PostService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Post write(Member author, String title, String body, boolean isPublished) {
+    public Post write(Member author, String title, String body, boolean isPublished, boolean isPaid) {
         memberRepository.save(author);
 
         Post post = Post.builder()
@@ -28,6 +28,7 @@ public class PostService {
                 .title(title)
                 .body(body)
                 .isPublished(isPublished)
+                .isPaid(isPaid)
                 .build();
 
         return postRepository.save(post);

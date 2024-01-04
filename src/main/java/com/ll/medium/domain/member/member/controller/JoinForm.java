@@ -12,4 +12,6 @@ public class JoinForm {
 
     @NotBlank
     private String password;
+
+    private Boolean isPaid;
 }

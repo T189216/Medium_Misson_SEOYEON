@@ -1,9 +1,6 @@
 package com.ll.medium.domain.member.member.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -40,6 +37,9 @@ public class Member {
 
     private String password;
 
+    @Column(columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean isPaid;
+
     public Member(String username, String password) {
         this.username = username;
         this.password = password;
@@ -54,11 +54,20 @@ public class Member {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
 
+        if (isPaid) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_PAID"));
+        }
+
         return authorities;
     }
 
     public boolean isAdmin() {
         return getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+    }
+
+    public boolean isPaid() {
+        return getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_PAID"));
     }
 }

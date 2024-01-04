@@ -18,7 +18,7 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public RsData<Member> join(String username, String password) {
+    public RsData<Member> join(String username, String password, Boolean isPaid) {
         if (findByUsername(username).isPresent()) {
             return RsData.of("400-2", "이미 존재하는 회원입니다.");
         }
@@ -26,10 +26,16 @@ public class MemberService {
         Member member = Member.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password))
+                .isPaid(isPaid)
                 .build();
         memberRepository.save(member);
 
         return RsData.of("200", "%s님 환영합니다. 로그인 후 이용해주세요.".formatted(member.getUsername()), member);
+    }
+
+    public void membership(long id, boolean membership) {
+        Member member = memberRepository.findById(id).get();
+        member.setPaid(membership);
     }
 
     public Optional<Member> findByUsername(String username) {
