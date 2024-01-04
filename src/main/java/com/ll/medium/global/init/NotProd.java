@@ -45,6 +45,8 @@ public class NotProd {
             IntStream.rangeClosed(111, 210).forEach(i -> {
                 postService.write(User3, "제목 " + i, "내용 " + i, true, true);
             });
+
+            memberService.membership(User2.getId(), true);
         };
     }
 }

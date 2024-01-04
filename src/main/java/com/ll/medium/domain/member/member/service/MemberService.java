@@ -32,6 +32,11 @@ public class MemberService {
         return RsData.of("200", "%s님 환영합니다. 로그인 후 이용해주세요.".formatted(member.getUsername()), member);
     }
 
+    public void membership(long id, boolean membership) {
+        Member member = memberRepository.findById(id).get();
+        member.setPaid(membership);
+    }
+
     public Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
     }
