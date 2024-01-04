@@ -67,6 +67,7 @@ public class Member {
     }
 
     public boolean isPaid() {
-        return isPaid;
+        return getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_PAID"));
     }
 }

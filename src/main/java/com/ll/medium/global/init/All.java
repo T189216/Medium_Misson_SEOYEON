@@ -20,8 +20,8 @@ public class All {
         return args -> {
             if (memberService.findByUsername("system").isPresent()) return;
 
-            memberService.join("system", "system");
-            memberService.join("admin", "admin");
+            memberService.join("system", "system", true);
+            memberService.join("admin", "admin", true);
         };
     }
 }

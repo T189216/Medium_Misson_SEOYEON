@@ -27,10 +27,10 @@ public class NotProd {
         return args -> {
             if (memberService.findByUsername("user1").isPresent()) return;
 
-            Member User1 = memberService.join("user1", "1234").getData();
-            Member User2 = memberService.join("user2", "1234").getData();
-            Member User3 = memberService.join("user3", "1234").getData();
-            Member User4 = memberService.join("user4", "1234").getData();
+            Member User1 = memberService.join("user1", "1234", true).getData();
+            Member User2 = memberService.join("user2", "1234", true).getData();
+            Member User3 = memberService.join("user3", "1234", false).getData();
+            Member User4 = memberService.join("user4", "1234", false).getData();
 
             postService.write(User1, "제목 1", "내용 1", true, false);
             postService.write(User1, "제목 2", "내용 2", true, true);
@@ -45,8 +45,6 @@ public class NotProd {
             IntStream.rangeClosed(111, 210).forEach(i -> {
                 postService.write(User3, "제목 " + i, "내용 " + i, true, true);
             });
-
-            memberService.membership(User2.getId(), true);
         };
     }
 }
