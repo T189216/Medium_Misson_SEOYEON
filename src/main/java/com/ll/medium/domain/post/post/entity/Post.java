@@ -39,4 +39,11 @@ public class Post {
     private boolean isPublished;
 
     private boolean isPaid;
+
+    @Setter(AccessLevel.PROTECTED)
+    private long hit;
+
+    public void increaseHit() {
+        hit++;
+    }
 }
