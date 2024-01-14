@@ -12,7 +12,6 @@ import org.apache.catalina.util.URLEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
@@ -98,15 +97,6 @@ public class Rq {
         queryString = Ut.url.deleteQueryParam(queryString, paramName);
 
         return queryString;
-    }
-
-    public Member getLoginedMember() {
-        User user = getUser();
-        if (user != null) {
-            return new Member(user.getUsername(), user.getPassword());
-        }
-
-        return null;
     }
 
     public Member getMember() {
