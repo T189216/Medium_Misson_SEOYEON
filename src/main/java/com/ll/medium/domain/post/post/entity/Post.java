@@ -7,9 +7,11 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 
+import static lombok.AccessLevel.PROTECTED;
+
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = PROTECTED)
+@AllArgsConstructor(access = PROTECTED)
 @Builder
 @Getter
 @Setter
@@ -22,4 +24,11 @@ public class Post extends BaseEntity {
     private String body;
 
     private boolean isPublished;
+
+    @Setter(PROTECTED)
+    private long hit;
+
+    public void increaseHit() {
+        hit++;
+    }
 }
