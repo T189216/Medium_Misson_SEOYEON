@@ -5,7 +5,10 @@ import com.ll.medium.domain.post.post.service.PostService;
 import com.ll.medium.global.exception.GlobalException;
 import com.ll.medium.global.rq.Rq.Rq;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -77,7 +80,7 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/write")
-    public String showWrite(@Valid WriteForm form) {
+    public String write(@Valid WriteForm form) {
         Post post = postService.write(rq.getMember(), form.getTitle(), form.getBody(), form.isPublished());
 
         return rq.redirect("/post/" + post.getId(), post.getId() + "번 글이 작성되었습니다.");
@@ -97,7 +100,7 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/{id}/modify")
-    public String showModify(@PathVariable long id, @Valid ModifyForm form) {
+    public String modify(@PathVariable long id, @Valid ModifyForm form) {
         Post post = postService.findById(id).orElseThrow(() -> new GlobalException("404-1", "해당 글이 존재하지 않습니다."));
 
         if (!postService.canModify(rq.getMember(), post)) throw new GlobalException("403-1", "권한이 없습니다.");
@@ -117,5 +120,31 @@ public class PostController {
         postService.delete(post);
 
         return rq.redirect("/post/list", post.getId() + "번 글이 삭제되었습니다.");
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/{id}/like")
+    @GetMapping("/{id}/like")
+    public String like(@PathVariable long id) {
+        Post post = postService.findById(id).orElseThrow(() -> new GlobalException("404-1", "해당 글이 존재하지 않습니다."));
+
+        if (!postService.canLike(rq.getMember(), post)) throw new GlobalException("403-1", "권한이 없습니다.");
+
+        postService.like(rq.getMember(), post);
+
+        return rq.redirect("/post/" + post.getId(), post.getId() + "번 글을 추천하였습니다.");
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @DeleteMapping("/{id}/cancelLike")
+    @GetMapping("/{id}/cancelLike")
+    public String cancelLike(@PathVariable long id) {
+        Post post = postService.findById(id).orElseThrow(() -> new GlobalException("404-1", "해당 글이 존재하지 않습니다."));
+
+        if (!postService.canCancelLike(rq.getMember(), post)) throw new GlobalException("403-1", "권한이 없습니다.");
+
+        postService.cancelLike(rq.getMember(), post);
+
+        return rq.redirect("/post/" + post.getId(), post.getId() + "번 글을 추천취소하였습니다.");
     }
 }

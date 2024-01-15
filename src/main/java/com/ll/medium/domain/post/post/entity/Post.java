@@ -12,6 +12,7 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.ll.medium.domain.member.member.entity.QMember.member;
 import static jakarta.persistence.CascadeType.ALL;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -42,7 +43,7 @@ public class Post extends BaseEntity {
         hit++;
     }
 
-    public void like(Member member) {
+    public void addLike(Member member) {
         if (hasLike(member)) {
             return;
         }
@@ -58,7 +59,7 @@ public class Post extends BaseEntity {
                 .anyMatch(postLike -> postLike.getMember().equals(member));
     }
 
-    public void cancelLike(Member member) {
+    public void deleteLike(Member member) {
         likes.removeIf(postLike -> postLike.getMember().equals(member));
     }
 }

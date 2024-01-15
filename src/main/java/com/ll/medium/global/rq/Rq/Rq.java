@@ -8,13 +8,13 @@ import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.util.URLEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
@@ -28,7 +28,7 @@ public class Rq {
     private Member member;
 
     public String redirect(String url, String msg) {
-        msg = URLEncoder.DEFAULT.encode(msg, StandardCharsets.UTF_8);
+        msg = URLEncoder.encode(msg, StandardCharsets.UTF_8);
 
         StringBuilder sb = new StringBuilder();
 
@@ -50,9 +50,7 @@ public class Rq {
     }
 
     public String redirectOrBack(RsData<?> rs, String path) {
-        if (rs.isFail()) {
-            return historyBack(rs.getMsg());
-        }
+        if (rs.isFail()) return historyBack(rs.getMsg());
 
         return redirect(path, rs.getMsg());
     }
@@ -101,8 +99,8 @@ public class Rq {
 
     public Member getMember() {
         if ( isLogout() ) return null;
-        
-        if (member == null) {
+
+        if ( member == null ) {
             member = entityManager.getReference(Member.class, getUser().getId());
         }
 

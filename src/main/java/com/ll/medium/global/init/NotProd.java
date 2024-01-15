@@ -56,13 +56,13 @@ public class NotProd {
             postService.write(User3, "제목 " + i, "내용 " + i, true);
         });
 
-        post1.like(User2);
-        post1.like(User3);
-        post1.like(User4);
+        postService.like(User2, post1);
+        postService.like(User3, post1);
+        postService.like(User4, post1);
 
-        post2.like(User3);
-        post2.like(User4);
+        postService.like(User3, post2);
+        postService.like(User4, post2);
 
-        post5.like(User4);
+        postService.like(User4, post5);
     }
 }
